@@ -88,15 +88,14 @@ const TicTacToe = () => {
     console.log(`Winner is ${currentWinner}`);
     if (currentWinner !== null) setWinner(currentWinner);
 
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [move]);
 
   return (
     <>
       <div className="container">
         <h1>Tic Tac Toe!</h1>
-        <div>{move % 2 === 0 ? "X to move" : "O to move"}</div>
+        {!winner && <div>{move % 2 === 0 ? "X to move" : "O to move"}</div>}
         <ul>
           {board.slice(0, 3).map((next, i) => (
             <li onClick={(e) => onBoardClick(i)} key={i}>
