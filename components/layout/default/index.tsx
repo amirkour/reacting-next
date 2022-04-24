@@ -29,6 +29,9 @@ export const DefaultNav = () => {
         <Link href="/tic-tac-toe">
           <a>Play Tac Tac Toe!</a>
         </Link>
+        <Link href="/L2MoveDivs">
+          <a>Learn to move divs!?</a>
+        </Link>
       </nav>
       <style jsx>{`
         nav {
