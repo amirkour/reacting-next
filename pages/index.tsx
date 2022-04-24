@@ -6,12 +6,7 @@ import Link from "next/link";
 const Home: NextPage = () => {
   return (
     <>
-      <div>hi world</div>
-      <div>
-        <Link href="/tic-tac-toe">
-          <a>Play Tac Tac Toe!</a>
-        </Link>
-      </div>
+      <h1 style={{ textAlign: "center" }}>Hello World!?</h1>
     </>
   );
 };

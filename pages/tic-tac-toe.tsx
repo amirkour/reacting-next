@@ -87,12 +87,15 @@ const TicTacToe = () => {
     const currentWinner = getWinner();
     console.log(`Winner is ${currentWinner}`);
     if (currentWinner !== null) setWinner(currentWinner);
+
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [move]);
 
   return (
     <>
-      <div>
-        <div>Tic Tac Toe!</div>
+      <div className="container">
+        <h1>Tic Tac Toe!</h1>
         <div>{move % 2 === 0 ? "X to move" : "O to move"}</div>
         <ul>
           {board.slice(0, 3).map((next, i) => (
@@ -124,6 +127,11 @@ const TicTacToe = () => {
         )}
       </div>
       <style jsx>{`
+        .container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
         ul {
           list-style: none;
           padding: 0 0;
