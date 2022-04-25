@@ -1,21 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 
-a {
-  color: #0070f3;
-  text-decoration: none;
+@layer base {
+  h1 {
+    @apply text-3xl font-bold underline;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+  h3 {
+    @apply text-xl;
+  }
+  a {
+    @apply text-blue-600;
+  }
+  a:hover,
+  a:focus {
+    @apply text-blue-800 underline;
+  }
+  a:visited {
+    @apply text-purple-600;
+  }
 }
-
-a:hover,
-a:focus,
-a:active {
-  text-decoration: underline;
-}
-a:visited {
-  color: purple;
-}
-
-* {
-  box-sizing: border-box;
-} */
