@@ -5,55 +5,33 @@ interface DefaultProps {
   children: React.ReactNode;
 }
 
-export const DefaultContainer = ({ children }: DefaultProps) => {
-  return (
-    <>
-      <div className="container">{children}</div>
-      <style jsx>{`
-        .container {
-          margin: 0 auto;
-          max-width: 1200px;
-        }
-      `}</style>
-    </>
-  );
-};
+export const DefaultContainer = ({ children }: DefaultProps) => (
+  <div className="container">{children}</div>
+);
 
 export const DefaultNav = () => {
   return (
     <>
-      <nav>
+      <nav className="py-4 px-8">
         <Link href="/">
-          <a>Home</a>
+          <a className="mx-4">Home</a>
         </Link>
         <Link href="/tic-tac-toe">
-          <a>Play Tac Tac Toe!</a>
+          <a className="mx-4">Play Tac Tac Toe!</a>
         </Link>
         <Link href="/L2MoveDivs">
-          <a>Learn to move divs!?</a>
+          <a className="mx-4">Learn to move divs!?</a>
         </Link>
       </nav>
-      <style jsx>{`
-        nav {
-          padding: 1rem 2rem;
-        }
-        a {
-          margin: 0 1rem;
-        }
-      `}</style>
     </>
   );
 };
 
-const DefaultLayout = ({ children }: DefaultProps) => {
-  return (
-    <>
-      <DefaultContainer>
-        <DefaultNav />
-        {children}
-      </DefaultContainer>
-    </>
-  );
-};
+const DefaultLayout = ({ children }: DefaultProps) => (
+  <DefaultContainer>
+    <DefaultNav />
+    {children}
+  </DefaultContainer>
+);
 
 export default DefaultLayout;
