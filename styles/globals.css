@@ -21,4 +21,7 @@
   a:visited {
     @apply text-purple-600;
   }
+  button {
+    @apply inline-block px-4 py-2 bg-slate-300 text-black font-medium text-xs uppercase shadow-md hover:ring-1 hover:ring-slate-300 active:bg-slate-600 hover:shadow-lg transition duration-150 ease-in-out;
+  }
 }

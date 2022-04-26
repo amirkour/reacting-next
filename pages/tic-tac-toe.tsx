@@ -92,65 +92,50 @@ const TicTacToe = () => {
   }, [move]);
 
   return (
-    <>
-      <div className="container">
-        <h1>Tic Tac Toe!</h1>
-        {!winner && <div>{move % 2 === 0 ? "X to move" : "O to move"}</div>}
-        <ul>
-          {board.slice(0, 3).map((next, i) => (
-            <li onClick={(e) => onBoardClick(i)} key={i}>
-              {next}
-            </li>
-          ))}
-        </ul>
-        <ul>
-          {board.slice(3, 6).map((next, i) => (
-            <li onClick={(e) => onBoardClick(i + 3)} key={i + 3}>
-              {next}
-            </li>
-          ))}
-        </ul>
-        <ul>
-          {board.slice(6, 9).map((next, i) => (
-            <li onClick={(e) => onBoardClick(i + 6)} key={i + 6}>
-              {next}
-            </li>
-          ))}
-        </ul>
-        {winner !== null && (
-          <div>
-            {winner} wins!
-            <br />
-            <button onClick={reset}>Reset</button>
-          </div>
-        )}
-      </div>
-      <style jsx>{`
-        .container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-        ul {
-          list-style: none;
-          padding: 0 0;
-          margin: 0 0;
-          display: flex;
-          flex-direction: row;
-        }
-        li {
-          cursor: pointer;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin: 0 0;
-          padding: 0 0;
-          width: 40px;
-          height: 40px;
-          border: 2px solid black;
-        }
-      `}</style>
-    </>
+    <div className="flex flex-col items-center">
+      <h1>Tic Tac Toe!</h1>
+      {!winner && <div>{move % 2 === 0 ? "X to move" : "O to move"}</div>}
+      <ul className="flex flex-row w-[200px] h-[75px] mt-0 my-0 pt-0 py-0">
+        {board.slice(0, 3).map((next, i) => (
+          <li
+            className="flex justify-center items-center w-1/3 h-full border-2 border-black border-solid cursor-pointer"
+            onClick={(e) => onBoardClick(i)}
+            key={i}
+          >
+            {next}
+          </li>
+        ))}
+      </ul>
+      <ul className="flex flex-row w-[200px] h-[75px] mt-0 my-0 pt-0 py-0">
+        {board.slice(3, 6).map((next, i) => (
+          <li
+            className="flex justify-center items-center w-1/3 h-full border-2 border-black border-solid cursor-pointer"
+            onClick={(e) => onBoardClick(i + 3)}
+            key={i + 3}
+          >
+            {next}
+          </li>
+        ))}
+      </ul>
+      <ul className="flex flex-row w-[200px] h-[75px] mt-0 my-0 pt-0 py-0">
+        {board.slice(6, 9).map((next, i) => (
+          <li
+            className="flex justify-center items-center w-1/3 h-full border-2 border-black border-solid cursor-pointer"
+            onClick={(e) => onBoardClick(i + 6)}
+            key={i + 6}
+          >
+            {next}
+          </li>
+        ))}
+      </ul>
+      {winner !== null && (
+        <div>
+          {winner} wins!
+          <br />
+          <button onClick={reset}>Reset</button>
+        </div>
+      )}
+    </div>
   );
 };
 
