@@ -28,10 +28,10 @@ export const DefaultNav = () => {
 };
 
 const DefaultLayout = ({ children }: DefaultProps) => (
-  <DefaultContainer>
+  <>
     <DefaultNav />
-    {children}
-  </DefaultContainer>
+    <DefaultContainer>{children}</DefaultContainer>
+  </>
 );
 
 export default DefaultLayout;
