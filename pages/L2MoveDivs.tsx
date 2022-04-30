@@ -18,18 +18,16 @@ const Movable = () => {
 
   const onMouseUp = (e) => {
     setClicked(false);
-    // if (divRef.current) divRef.current.style.position = "inherit";
   };
 
   const onMouseMove = (e) => {
     if (!clicked) return;
-    // if(divRef.current) divRef.current.style.top = e.
-    console.log(`e: ${e.target}`);
     if (divRef.current) {
       divRef.current.style.left = e.clientX - halfWidth + "px";
       divRef.current.style.top = e.clientY - halfHeight + "px";
     }
   };
+
   return (
     <div
       ref={divRef}
