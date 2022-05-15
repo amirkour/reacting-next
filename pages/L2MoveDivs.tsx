@@ -16,11 +16,11 @@ const Movable = () => {
     }
   };
 
-  const onMouseUp = (e) => {
+  const onMouseUp = () => {
     setClicked(false);
   };
 
-  const onMouseMove = (e) => {
+  const onMouseMove = (e: { clientX: number; clientY: number; }) => {
     if (!clicked) return;
     if (divRef.current) {
       divRef.current.style.left = e.clientX - halfWidth + "px";
