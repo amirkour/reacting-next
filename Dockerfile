@@ -31,7 +31,6 @@ FROM node:17-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
-ENV PORT 80
 # Uncomment the following line in case you want to disable telemetry during runtime.
 ENV NEXT_TELEMETRY_DISABLED 1
 
