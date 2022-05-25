@@ -22,9 +22,19 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 ## Docker commands
 
+### Building Image
+
 Taken primarily from [the nextjs deployment site.](https://nextjs.org/docs/deployment)
 
 ```javascript
 docker build -t reacting-next .
 docker run -p 3000:3000 reacting-next
 ```
+
+### Tagging/Pushing to aws
+
+1. use snippet awsecr 1 (w/o a space) - this will "retrieve an authentication token and authenticate your Docker client to your registry."
+Use the AWS CLI
+2. build the image you wanna deploy
+3. use snippet awsecr 2 (w/o a space) - this'll "tag your image so you can push the image to [your] repository"
+4. use snippet awsecr 3 (w/o a space) - this'll push your image to your AWS repository
