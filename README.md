@@ -20,3 +20,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+## Docker commands
+
+Taken primarily from [the nextjs deployment site.](https://nextjs.org/docs/deployment)
+
+```javascript
+docker build -t reacting-next .
+docker run -p 3000:3000 reacting-next
+```
