@@ -33,6 +33,8 @@ docker run -p 3000:3000 reacting-next
 
 ### Tagging/Pushing to aws
 
+These steps were ripped-off of the push commands/instructions from AWS ECR
+
 1. use snippet awsecr 1 (w/o a space) - this will "retrieve an authentication token and authenticate your Docker client to your registry."
 Use the AWS CLI
 2. build the image you wanna deploy
