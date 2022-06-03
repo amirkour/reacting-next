@@ -36,7 +36,12 @@ docker run -p 3000:3000 reacting-next
 These steps were ripped-off of the push commands/instructions from AWS ECR
 
 1. use snippet awsecr 1 (w/o a space) - this will "retrieve an authentication token and authenticate your Docker client to your registry."
-Use the AWS CLI
 2. build the image you wanna deploy
 3. use snippet awsecr 2 (w/o a space) - this'll "tag your image so you can push the image to [your] repository"
 4. use snippet awsecr 3 (w/o a space) - this'll push your image to your AWS repository
+
+### Updating ECS Service to latest image
+
+1. Pullup the cluster in ECS
+2. Check the service checkbox and click the 'update' button
+3. Ensure the 'force deployment' checbox is checked, then skip to the end and deploy (this'll force a re-pull of the latest image)
