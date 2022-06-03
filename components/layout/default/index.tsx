@@ -19,7 +19,7 @@ export const DefaultNav = () => {
         <Link href="/tic-tac-toe">
           <a className="mx-4">Play Tac Tac Toe!</a>
         </Link>
-        <Link href="/L2MoveDivs">
+        <Link href="/div-moving">
           <a className="mx-4">Learn to move divs!?</a>
         </Link>
       </nav>

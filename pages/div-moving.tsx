@@ -1,3 +1,4 @@
+import { NextPage } from "next";
 import React, { useState, useRef } from "react";
 
 const width = 80;
@@ -39,7 +40,7 @@ const Movable = () => {
   );
 };
 
-const L2MoveDivs = () => {
+const DivMoving: NextPage = () => {
   return (
     <>
       <h1 className="text-center">Learn To Move Divs!?</h1>
@@ -55,4 +56,4 @@ const L2MoveDivs = () => {
   );
 };
 
-export default L2MoveDivs;
+export default DivMoving;

@@ -1,6 +1,7 @@
+import { NextPage } from "next";
 import React, { useState, useEffect } from "react";
 
-const TicTacToe = () => {
+const TicTacToe: NextPage = () => {
   const [move, setMove] = useState<number>(0);
   const [board, setBoard] = useState<Array<null | string>>(
     new Array(9).fill(null)
