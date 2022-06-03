@@ -22,6 +22,9 @@ export const DefaultNav = () => {
         <Link href="/div-moving">
           <a className="mx-4">Learn to move divs!?</a>
         </Link>
+        <Link href="/react-callouts">
+          <a className="mx-4">Callouts</a>
+        </Link>
       </nav>
     </>
   );
