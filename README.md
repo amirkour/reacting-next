@@ -31,7 +31,9 @@ docker build -t reacting-next .
 docker run -p 3000:3000 reacting-next
 ```
 
-### Tagging/Pushing to aws
+## AWS Stuff
+
+### Tagging/Pushing image to aws/ecr
 
 These steps were ripped-off of the push commands/instructions from AWS ECR
 
@@ -40,8 +42,17 @@ These steps were ripped-off of the push commands/instructions from AWS ECR
 3. use snippet awsecr 2 (w/o a space) - this'll "tag your image so you can push the image to [your] repository"
 4. use snippet awsecr 3 (w/o a space) - this'll push your image to your AWS repository
 
-### Updating ECS Service to latest image
+### ECS Stuff
+#### Updating ECS Service to latest image
 
 1. Pullup the cluster in ECS
 2. Check the service checkbox and click the 'update' button
 3. Ensure the 'force deployment' checbox is checked, then skip to the end and deploy (this'll force a re-pull of the latest image)
+
+### Elastic Beanstalk stuff
+
+To publish the app to EB:
+
+1. `npm run build`
+2. zip the `.next` folder and `package.json` file into a zip file/archive
+3. upload that zip file to EB
