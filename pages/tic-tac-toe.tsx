@@ -1,12 +1,14 @@
 import { NextPage } from "next";
 import React, { useState, useEffect } from "react";
+const whosTurnDefault = "X always goes first :)";
 
 const TicTacToe: NextPage = () => {
-  const [move, setMove] = useState<number>(0);
+  const [whosTurn, setWhosTurn] = useState<string | null>(whosTurnDefault);
   const [board, setBoard] = useState<Array<null | string>>(
     new Array(9).fill(null)
   );
   const [winner, setWinner] = useState<string | null>(null);
+  const [lastMoveIndex, setLastMoveIndex] = useState<number | null>(null);
 
   const rowWin: (row: number) => boolean = (row: number) => {
     return (
@@ -37,65 +39,67 @@ const TicTacToe: NextPage = () => {
     return null;
   };
 
-  const getWinner: () => string | null = () => {
-    if (move < 3) return null;
-
-    const winIndex = diagonalWinIndex();
-    if (winIndex !== null) return board[winIndex];
-
-    for (let i = 0; i < 3; i++) {
-      if (rowWin(i * 3)) return board[i * 3];
-      if (colWin(i)) return board[i];
-    }
-
-    if (move >= 9) return "Nobody";
-
-    return null;
-  };
-
-  const onBoardClick: (i: number) => void = (i: number) => {
+  const onBoardClick: (i: number) => Promise<void> = async (i: number) => {
     console.log(`clicked ${i}`);
     if (winner) {
       console.log("There's a winner - nothing to do");
       return;
     }
-
-    if (board[i]) {
-      console.log(`${i} has already been clicked, try again`);
+    if (board[i] != null) {
+      console.log(`that space is already taken ... no-op`);
       return;
     }
 
-    const newBoard = board.slice();
-    if (move % 2 === 0) {
-      // x moves
-      newBoard[i] = "X";
-    } else {
-      // o moves
-      newBoard[i] = "O";
-    }
-
-    setMove((prev) => prev + 1);
-    setBoard(newBoard);
+    console.log(`setting last move index to ${i}`);
+    setLastMoveIndex(i);
   };
 
   const reset = () => {
-    setMove(0);
     setBoard(new Array(9).fill(null));
     setWinner(null);
+    setLastMoveIndex(null);
+    setWhosTurn(whosTurnDefault);
   };
 
   useEffect(() => {
-    const currentWinner = getWinner();
-    console.log(`Winner is ${currentWinner}`);
-    if (currentWinner !== null) setWinner(currentWinner);
+    const apiRequest = async () => {
+      try {
+        const response = await fetch("/api/ttt", {
+          method: "POST",
+          body: JSON.stringify({ board, move: lastMoveIndex }),
+        }).then(async (res) => {
+          if (!res.ok) {
+            const error = await res.text();
+            throw error ?? "Whoops! Something bad happened we know not what!";
+          }
+
+          return res.json();
+        });
+        console.log(`got this response in the ui: ${JSON.stringify(response)}`);
+
+        setBoard(response.board);
+        setWhosTurn(response.nextToMove);
+        if (response.outcome) setWinner(response.outcome);
+      } catch (e) {
+        console.log(`got this error: ${e}`);
+      }
+    };
+
+    if (lastMoveIndex != null) apiRequest();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [move]);
+  }, [lastMoveIndex]);
 
   return (
     <div className="flex flex-col items-center">
       <h1>Tic Tac Toe!</h1>
-      {!winner && <div>{move % 2 === 0 ? "X to move" : "O to move"}</div>}
+      {!winner && (
+        <div>
+          {whosTurn && whosTurn.length > 0
+            ? `${whosTurn}`
+            : `${whosTurn}'s turn next!`}
+        </div>
+      )}
       <ul className="flex flex-row w-[200px] h-[75px] mt-0 my-0 pt-0 py-0">
         {board.slice(0, 3).map((next, i) => (
           <li
@@ -131,7 +135,7 @@ const TicTacToe: NextPage = () => {
       </ul>
       {winner !== null && (
         <div>
-          {winner} wins!
+          {winner}
           <br />
           <button onClick={reset}>Reset</button>
         </div>
