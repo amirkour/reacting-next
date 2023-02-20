@@ -1,29 +1,23 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { IApiHandler, IApiHandlerResponse } from "../IHandler";
 
-export default class ProdTTTApiHandler implements IApiHandler {
+export default class DevTTTApiHandler implements IApiHandler {
   async handleApiRequest(
     req: NextApiRequest,
-    res: NextApiResponse<any>
+    res: NextApiResponse
   ): Promise<IApiHandlerResponse> {
-    let status, response;
+    let status = 200,
+      response;
+
+    const apiUrl = process.env.TIC_TAC_TOE_API_URL;
+    if (!apiUrl) throw "missing api url - cannot query tic-tac-toe api w/o it";
+    if (!req.body) throw "missing required request body";
 
     try {
-      const apiKey = process.env.TIC_TAC_TOE_API_KEY;
-      if (!apiKey)
-        throw "missing api key - cannot query tic-tac-toe api w/o it";
-
-      const apiUrl = process.env.TIC_TAC_TOE_API_URL;
-      if (!apiUrl)
-        throw "missing api url - cannot query tic-tac-toe api w/o it";
-
-      if (!req.body) throw "missing required request body";
-
       response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": apiKey,
         },
         body: req.body,
       }).then(async (apiResponse) => {
@@ -35,10 +29,7 @@ export default class ProdTTTApiHandler implements IApiHandler {
 
         return apiResponse.json();
       });
-
-      status = 200;
-      console.log(`Returning this response: ${JSON.stringify(response)}`);
-    } catch (e: any) {
+    } catch (e) {
       console.error(
         `${this.constructor.name}: Encountered the following error: ${e}`
       );
@@ -46,6 +37,6 @@ export default class ProdTTTApiHandler implements IApiHandler {
       response = e;
     }
 
-    return { status, response };
+    return { status, response: JSON.parse(response.body) };
   }
 }
