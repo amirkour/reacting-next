@@ -7,11 +7,21 @@ NOTE: This is a [Next.js](https://nextjs.org/) project bootstrapped with [`creat
 
 ## Required Environment Variables
 
-For the tic-tac-toe game to work, you'll need to set the environment variable TIC_TAC_TOE_API_KEY to the API key of the tic-tac-toe handler.
+For the tic-tac-toe game to work, you'll need to set some environment variables ...
 
-**In dev**: create a file named `.env.development` and put the key in there.  
+### in dev
 
-**In elastic beanstalk**: navigate to the prod environment, then "Configuration" along the left, then click the "Edit" button next to "Software," then scroll to the bottom to define application variables.
+- create a file named `.env.development` 👈🏻 this is where env vars go for your dev environment
+- `TIC_TAC_TOE_API_URL` = the URL to the docker container running on your machine that's hosting the lambda Runtime Interface Emulator
+
+### in prod
+
+- `TIC_TAC_TOE_API_URL`: URL to the api gateway that's sending requests to the tic-tac-toe lambda
+- `TIC_TAC_TOE_API_KEY`: the API key of the tic-tac-toe api gateway service
+
+### In elastic beanstalk
+
+navigate to the prod environment, then "Configuration" along the left, then click the "Edit" button next to "Software," then scroll to the bottom to define application variables.
 
 ## Dev Server
 
@@ -20,20 +30,11 @@ nvm use
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to start to play w/ your local dev site.
 
-## Docker commands
+## Docker Environment
 
-***DEPRECATED*** - I'm not using docker (or ECR) at the moment, but I'm leaving these notes here in case I want/need them again ...
-
-### Building Image
-
-Taken primarily from [the nextjs deployment site.](https://nextjs.org/docs/deployment)
-
-```javascript
-docker build -t reacting-next .
-docker run -p 3000:3000 reacting-next
-```
+You'll need to build the min-max-tic-tac-toe project, then the tic-tac-toe-handler project, then get docker up and running in the top-level `reacting` folder - see those project notes/readmes on how to get up and running there.
 
 # AWS Stuff
 ## Elastic Beanstalk stuff

@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import React, { useState, useEffect } from "react";
-const whosTurnDefault = "X always goes first :)";
+const whosTurnDefault = "❌ always goes first 🥳";
 
 const TicTacToe: NextPage = () => {
   const [whosTurn, setWhosTurn] = useState<string | null>(whosTurnDefault);
@@ -94,7 +94,7 @@ const TicTacToe: NextPage = () => {
     <div className="flex flex-col items-center">
       <h1>Tic Tac Toe!</h1>
       {!winner && (
-        <div>
+        <div className="my-4">
           {whosTurn && whosTurn.length > 0
             ? `${whosTurn}`
             : `${whosTurn}'s turn next!`}
