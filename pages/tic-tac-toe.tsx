@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import React, { useState, useEffect } from "react";
+import { isDev } from "../lib/config";
 const whosTurnDefault = "❌ always goes first 🥳";
 
 const TicTacToe: NextPage = () => {
@@ -9,35 +10,8 @@ const TicTacToe: NextPage = () => {
   );
   const [winner, setWinner] = useState<string | null>(null);
   const [lastMoveIndex, setLastMoveIndex] = useState<number | null>(null);
-
-  const rowWin: (row: number) => boolean = (row: number) => {
-    return (
-      row >= 0 &&
-      row < board.length &&
-      row % 3 === 0 &&
-      board[row] !== null &&
-      board[row] === board[row + 1] &&
-      board[row] === board[row + 2]
-    );
-  };
-
-  const colWin: (col: number) => boolean = (col: number) => {
-    return (
-      col >= 0 &&
-      col < 3 &&
-      board[col] !== null &&
-      board[col] === board[col + 3] &&
-      board[col] === board[col + 6]
-    );
-  };
-
-  const diagonalWinIndex: () => number | null = () => {
-    if (board[0] !== null && board[0] === board[4] && board[4] === board[8])
-      return 0;
-    if (board[2] !== null && board[2] === board[4] && board[4] === board[6])
-      return 2;
-    return null;
-  };
+  const [rawResponse, setRawResponse] = useState<any>(null);
+  const [boardHistory, setBoardHistory] = useState<(null | string)[][]>([]);
 
   const onBoardClick: (i: number) => Promise<void> = async (i: number) => {
     console.log(`clicked ${i}`);
@@ -59,6 +33,8 @@ const TicTacToe: NextPage = () => {
     setWinner(null);
     setLastMoveIndex(null);
     setWhosTurn(whosTurnDefault);
+    setRawResponse(null);
+    setBoardHistory([]);
   };
 
   useEffect(() => {
@@ -76,9 +52,11 @@ const TicTacToe: NextPage = () => {
           return res.json();
         });
         console.log(`got this response in the ui: ${JSON.stringify(response)}`);
+        setRawResponse(response);
 
         setBoard(response.board);
-        setWhosTurn(response.nextToMove);
+        setWhosTurn(`${response.nextToMove}'s turn next`);
+        setBoardHistory((old) => [...boardHistory, response.board]);
         if (response.outcome) setWinner(response.outcome);
       } catch (e) {
         console.log(`got this error: ${e}`);
@@ -89,6 +67,11 @@ const TicTacToe: NextPage = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastMoveIndex]);
+
+  const setBoardState = (newBoardState: (string | null)[]) => {
+    setBoard(newBoardState);
+    setBoardHistory([newBoardState]);
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -138,6 +121,39 @@ const TicTacToe: NextPage = () => {
           {winner}
           <br />
           <button onClick={reset}>Reset</button>
+        </div>
+      )}
+      {isDev() && (
+        <div className="text-red-400 border-solid border-red-400 border-8 w-full text-center p-1 mt-4">
+          <h2>dev mode enabled</h2>
+          {rawResponse && (
+            <>
+              <h3>response</h3>
+              <ul>
+                {Object.keys(rawResponse).map((key) => (
+                  <li key={key}>
+                    {key}: {JSON.stringify(rawResponse[key])}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+          {boardHistory && (
+            <>
+              <h3 className="mt-4">board history</h3>
+              <ul>
+                {boardHistory.map((bh, i) => (
+                  <li key={i}>
+                    {JSON.stringify(bh)}
+                    <button onClick={() => setBoardState(bh)}>set</button>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+          <div className="mt-4">
+            <button onClick={reset}>Reset</button>
+          </div>
         </div>
       )}
     </div>
